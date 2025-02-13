@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 import envConfig from "./config";
 
-const connetToDatabase = async ()=>{
+const connectToDatabase = async ()=>{
     try{
         await mongoose.connect(envConfig.mongodbString as string) //  as string is we are forcefully putting as a string when its not accepting
         mongoose.connection.on("connected", ()=>{
@@ -14,4 +14,4 @@ const connetToDatabase = async ()=>{
     }
 }
 
-export default connetToDatabase
+export default connectToDatabase
