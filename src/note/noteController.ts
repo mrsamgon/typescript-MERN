@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import envConfig from "../config/config";
 import noteModel from "./noteModel";
 import createHttpError from "http-errors";
+import { NetConnectOpts } from "net";
 
 
 
@@ -33,8 +34,50 @@ const createNote = async (req:Request, res:Response, next: NextFunction)=>{
      return next(createHttpError(500, "Error while creating"))
 
 
+    }
 }
+
+const listNotes = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const notes = await noteModel.find()
+        res.status(200).json({
+            message : "Hurry!! Notes fetched vayo haita ",
+            data: notes
+        })
+    } catch(error){
+        return next(createHttpError(500,"Error while fetching....."))
+    }
 }
+
+const listNote = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const {id} = req.params
+        const note = await noteModel.findById(id)
+        res.status(200).json({
+            message : "Hurry!! Note fetched vayo haita ",
+            data: note
+        })
+    } catch(error){
+        return next(createHttpError(500,"Error aayo while fetching....."))
+    }
+}
+
+const deleteNote = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const {id} = req.params
+        const note = await noteModel.findByIdAndDelete(id)
+        res.status(200).json({
+            message : "Notes delete vayo 😥 ",
+        
+        })
+    } catch(error){
+        return next(createHttpError(500,"Error while deleting....."))
+    }
+}
+
+
+
+
 
 export {createNote}
 
