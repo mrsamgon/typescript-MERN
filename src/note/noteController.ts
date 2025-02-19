@@ -49,10 +49,27 @@ const listNotes = async (req:Request,res:Response,next:NextFunction)=>{
     }
 }
 
+
+const deleteNote = async (req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const {id} = req.params
+        await noteModel.findByIdAndDelete(id)
+        res.status(200).json({
+            message : "Notes delete vayo 😥 ",
+            
+        })
+    } catch(error){
+        return next(createHttpError(500,"Error while deleting....."))
+    }
+}
+
 const listNote = async (req:Request,res:Response,next:NextFunction)=>{
     try{
         const {id} = req.params
         const note = await noteModel.findById(id)
+        if (!note){
+            return next(createHttpError(404, "Note not found with that id!"))
+        }
         res.status(200).json({
             message : "Hurry!! Note fetched vayo haita ",
             data: note
@@ -62,24 +79,10 @@ const listNote = async (req:Request,res:Response,next:NextFunction)=>{
     }
 }
 
-const deleteNote = async (req:Request,res:Response,next:NextFunction)=>{
-    try{
-        const {id} = req.params
-        const note = await noteModel.findByIdAndDelete(id)
-        res.status(200).json({
-            message : "Notes delete vayo 😥 ",
-        
-        })
-    } catch(error){
-        return next(createHttpError(500,"Error while deleting....."))
-    }
-}
 
 
 
-
-
-export {createNote}
+export {createNote, listNote, listNotes, deleteNote}
 
 
 
