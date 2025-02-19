@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import envConfig from "../config/config";
 import noteModel from "./noteModel";
-import { nextTick } from "process";
-import globalErrorHandler from "../middlewares/globalErrorHandler";
 import createHttpError from "http-errors";
 
 
@@ -14,7 +12,7 @@ const createNote = async (req:Request, res:Response, next: NextFunction)=>{
     const {title, subtitle, description} = req.body
     if(!title || !subtitle || !description){
         res.status(400).json({
-            message : " Please provide tittle, subttile, description"
+            message : " Please provide tittle, subttile, description hai"
         })
         return
         
@@ -39,3 +37,7 @@ const createNote = async (req:Request, res:Response, next: NextFunction)=>{
 }
 
 export {createNote}
+
+
+
+
